@@ -1,7 +1,22 @@
 const express = require("express");
 const path = require("path");
+const mongoose = require("mongoose");
 const app = express();
 const port = 3000;
+
+
+
+main().then(res => {
+    console.log("Connection with DB successful");
+})
+    .catch(err => {
+        console.log(err);
+    })
+async function main() {
+    await mongoose.connect('mongodb://127.0.0.1:27017/JobHunt');
+}
+
+
 
 app.set("view engine", "ejs");
 app.use(express.json());
