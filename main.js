@@ -3,8 +3,7 @@ const path = require("path");
 const mongoose = require("mongoose");
 const app = express();
 const port = 3000;
-
-
+const User = require("./models/user.js");
 
 main().then(res => {
     console.log("Connection with DB successful");
@@ -15,7 +14,6 @@ main().then(res => {
 async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/JobHunt');
 }
-
 
 
 app.set("view engine", "ejs");
@@ -34,6 +32,9 @@ app.get("/login", (req, res) => {
 })
 
 app.post("/login", (req, res) => {
+    let { username: username, password: password } = req.body;
+    let obj = { username, password };
+    console.log(obj);
     res.redirect("/");
 })
 
@@ -42,8 +43,6 @@ app.get("/signup", (req, res) => {
 })
 
 app.post("/signup", (req, res) => {
-    let body = req.body;
-    console.log(body);
     res.redirect("/login");
 })
 

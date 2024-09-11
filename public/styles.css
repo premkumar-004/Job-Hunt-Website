@@ -244,3 +244,13 @@ button:hover {
 #signup:hover {
     transform: scale(1.02);
 }
+
+.dont-have-acc {
+    text-align: center;
+}
+
+.dont-have-acc>a {
+    text-decoration: underline;
+    cursor: pointer;
+    color: rgb(63, 140, 255);
+}
