@@ -32,9 +32,8 @@ app.get("/login", (req, res) => {
 })
 
 app.post("/login", (req, res) => {
-    let { username: username, password: password } = req.body;
-    let obj = { username, password };
-    console.log(obj);
+    let user = req.body;
+    console.log(user);
     res.redirect("/");
 })
 
@@ -43,6 +42,8 @@ app.get("/signup", (req, res) => {
 })
 
 app.post("/signup", (req, res) => {
+    let data = req.body;
+    console.log(data);
     res.redirect("/login");
 })
 
