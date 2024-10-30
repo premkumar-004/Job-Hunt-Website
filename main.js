@@ -6,6 +6,8 @@ const port = 3000;
 const User = require("./models/user.js");
 const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
+const wrapAsync = require("./utils/wrapAsync.js");
+const ExpressError = require("./utils/ExpressError.js");
 
 app.set("view engine", "ejs");
 app.use(express.json());
@@ -51,6 +53,17 @@ app.post("/signup", (req, res) => {
     console.log(data);
     res.redirect("/login");
 })
+
+//Page not found Route
+app.all("*", (req, res, next) => {
+    next(new ExpressError(404, "Page Not Found"));
+})
+
+//Middleware for Error
+app.use((req, res, err, next) => {
+    let { statusCode, message } = err;
+    res.status(statusCode).send(message);
+});
 
 app.listen(port, (req, res) => {
     console.log(`Listening on Port no. ${port}`);
