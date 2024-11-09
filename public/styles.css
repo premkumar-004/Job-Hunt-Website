@@ -354,3 +354,56 @@ a {
     padding-left: 0;
     padding-right: 0;
 }
+
+/*About Page*/
+/* Container styling */
+.container {
+    max-width: 1200px;
+}
+
+/* Section titles */
+.about-us h1,
+.benefits h2,
+.testimonials h2,
+.upload-job-listings h2 {
+    font-weight: bold;
+}
+
+/* About Us Section */
+.about-us p.lead {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+/* Benefits Section */
+.benefit-box {
+    transition: transform 0.3s ease;
+}
+
+.benefit-box:hover {
+    transform: translateY(-5px);
+}
+
+/* Provider Steps */
+.provider-step {
+    transition: transform 0.3s ease;
+}
+
+.provider-step:hover {
+    transform: translateY(-5px);
+}
+
+/* Testimonials Section */
+.testimonial {
+    font-style: italic;
+    color: #666;
+    font-size: 0.95rem;
+    border-left: 4px solid #007bff;
+    background-color: #f9f9f9;
+}
+
+.testimonial h6 {
+    font-weight: bold;
+    color: #333;
+    margin-top: 1rem;
+}

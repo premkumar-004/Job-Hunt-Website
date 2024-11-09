@@ -47,6 +47,16 @@ app.get("/", (req, res) => {
     res.render("./listing/index.ejs");
 });
 
+//contact
+app.get("/contact", (req, res) => {
+    res.render("./contacts/contact.ejs");
+})
+
+//about us
+app.get("/about", (req, res) => {
+    res.render("./contacts/about.ejs");
+})
+
 app.get("/login", (req, res) => {
     res.render("./listing/login.ejs");
 })
