@@ -8,6 +8,7 @@ const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
+const Listing = require("./models/listing.js");
 
 app.set("view engine", "ejs");
 app.use(express.json());
@@ -28,6 +29,11 @@ async function main() {
     await mongoose.connect('mongodb://127.0.0.1:27017/JobHunt');
 }
 
+//listings
+app.get("/listings", wrapAsync(async (req, res) => {
+    const allListings = await Listing.find({});
+    res.render("index.ejs", { allListings });
+}))
 
 
 app.get("/", (req, res) => {

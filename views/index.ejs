@@ -1,15 +1,24 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
-    <body>
-        <h3>Find Jobs</h3>
-        <div class="card" style="width: 18rem;">
-            <img src="../public/media/info.png" class="card-img-top" alt="image">
-            <div class="card-body">
-                <h5 class="card-title">Damaged Switch Board</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's
-                    content.</p>
-                <a href="#" class="btn btn-primary">View</a>
-            </div>
+    <body class="main-container">
+        <h3>Find Relevant Job</h3>
+        <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1">
+            <% for(let listing of allListings){ %>
+                <a href="/listings/<%= listing._id %>" class="listing-link">
+                    <div class="card col listing-card">
+                        <img class="card-img-top" src="<%= listing.image.url %>" alt="listing_image"
+                            style="height : 20rem">
+                        <div class="card-img-overlay"></div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <b>
+                                    <%= listing.title %>
+                                </b> <br>
+                                &#8377; <%= listing.payment.toLocaleString("en-IN") %> /-
+                            </p>
+                        </div>
+                    </div>
+                </a>
+                <% } %>
         </div>
     </body>

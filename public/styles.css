@@ -290,3 +290,8 @@ button:hover {
     justify-content: center;
     align-items: space-evenly;
 }
+
+/* main body */
+a {
+    text-decoration: none;
+}
