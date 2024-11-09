@@ -111,8 +111,9 @@ body {
 
 .content {
     text-align: center;
-    margin-top: 0px;
+    margin-top: 100px;
     color: #f9f9f9;
+    color: rgb(60, 60, 60);
     background-color: rgb(51, 128, 195);
 }
 
@@ -120,6 +121,11 @@ body {
     font-weight: 600;
     margin-top: 0px;
     padding-top: 20px;
+}
+
+.container {
+    margin-top: 15px;
+    margin-left: 15px !important;
 }
 
 /* Existing styles (navbar, etc.) from previous example remain here */
