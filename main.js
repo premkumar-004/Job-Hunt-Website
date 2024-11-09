@@ -32,16 +32,23 @@ async function main() {
 //listings
 app.get("/listings", wrapAsync(async (req, res) => {
     const allListings = await Listing.find({});
-    res.render("index.ejs", { allListings });
-}))
+    res.render("./listing/index.ejs", { allListings });
+}));
+
+//show route
+app.get("/listings/:id", async (req, res) => {
+    let { id } = req.params;
+    const listing = await Listing.findById(id);
+    res.render("./listing/show.ejs", { listing });
+});
 
 
 app.get("/", (req, res) => {
-    res.render("index.ejs");
+    res.render("./listing/index.ejs");
 });
 
 app.get("/login", (req, res) => {
-    res.render("login.ejs");
+    res.render("./listing/login.ejs");
 })
 
 app.post("/login", (req, res) => {
@@ -51,13 +58,13 @@ app.post("/login", (req, res) => {
 })
 
 app.get("/signup", (req, res) => {
-    res.render("signup.ejs");
+    res.render("./listing/signup.ejs");
 })
 
 app.post("/signup", (req, res) => {
     let data = req.body;
     console.log(data);
-    res.redirect("/login");
+    res.redirect("/listing/login");
 })
 
 //Page not found Route
