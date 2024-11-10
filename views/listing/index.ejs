@@ -14,7 +14,11 @@
                                 <b>
                                     <%= listing.title %>
                                 </b> <br>
-                                <span>Payment : <b>&#8377; <%= listing.payment.toLocaleString("en-IN") %> /-</b></span>
+                                <span>Payment :
+                                    <b>&#8377;
+                                        <%= listing.payment ? listing.payment.toLocaleString("en-IN") : "N/A" %> /-
+                                    </b>
+                                </span>
                             </p>
                         </div>
                     </div>

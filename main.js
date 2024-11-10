@@ -88,16 +88,17 @@ app.post("/signup", (req, res) => {
     res.redirect("/listing/login");
 })
 
-//Page not found Route
+// Page not found Route
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Page Not Found"));
 })
 
 //Middleware for Error
-app.use((req, res, err, next) => {
-    let { statusCode, message } = err;
-    res.status(statusCode).send(message);
+app.use((err, req, res, next) => {
+    const { statusCode = 500, message = "Something went wrong" } = err;
+    res.status(statusCode).render("error.ejs", { message });
 });
+
 
 app.listen(port, (req, res) => {
     console.log(`Listening on Port no. ${port}`);
