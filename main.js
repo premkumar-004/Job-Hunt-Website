@@ -53,6 +53,13 @@ app.post("/listings", async (req, res) => {
     await newListing.save();
     res.redirect("/listings");
 })
+//Delete listing
+app.delete("/listing/:id", async (req, res) => {
+    let { id } = req.params;
+    let deletedListing = await Listing.findByIdAndDelete(id);
+    console.log(deletedListing);
+    res.redirect("/listings");
+})
 
 app.get("/", (req, res) => {
     res.render("./listing/index.ejs");
