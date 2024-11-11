@@ -57,7 +57,6 @@ app.post("/listings", async (req, res) => {
 app.delete("/listing/:id", async (req, res) => {
     let { id } = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
-    console.log(deletedListing);
     res.redirect("/listings");
 })
 
