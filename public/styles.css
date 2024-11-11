@@ -406,6 +406,12 @@ a {
     max-width: 1200px;
 }
 
+.my-5 {
+    margin-top: 3rem !important;
+    margin-bottom: 3rem !important;
+    margin-left: 2rem !important;
+}
+
 .about-us h1,
 .services h2,
 .benefits h2,
@@ -468,4 +474,12 @@ a {
     font-weight: bold;
     color: #333;
     margin-top: 1rem;
+}
+
+/* Contact Section */
+.py-5 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+    margin-left: 2.5rem !important;
+    margin-top: 0 !important;
 }
