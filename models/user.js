@@ -1,13 +1,4 @@
 const mongoose = require("mongoose");
-main().then(res => {
-    console.log("Connection with DB successful");
-})
-    .catch(err => {
-        console.log(err);
-    })
-async function main() {
-    await mongoose.connect('mongodb://127.0.0.1:27017/JobHunt');
-}
 
 let userSchema = new mongoose.Schema(
     {
@@ -15,16 +6,11 @@ let userSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        username: {
-            type: String,
-            maxLength: 20,
-            required: true
-        },
         email: {
             type: String,
             required: true
         },
-        password: {
+        phone: {
             type: String,
             required: true
         },

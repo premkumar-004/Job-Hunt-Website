@@ -9,6 +9,8 @@ const methodOverride = require("method-override");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const Listing = require("./models/listing.js");
+const { validateListing } = require("./middleware.js");
+const { wrap } = require("module");
 
 app.set("view engine", "ejs");
 app.use(express.json());
@@ -42,37 +44,37 @@ app.get("/listings/new", (req, res) => {
 
 
 //show route
-app.get("/listings/:id", async (req, res) => {
+app.get("/listings/:id", wrapAsync(async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id);
     res.render("./listing/show.ejs", { listing });
-});
+}));
 //create new listing
-app.post("/listings", async (req, res) => {
+app.post("/listings", validateListing, wrapAsync(async (req, res) => {
     const newListing = new Listing(req.body.listing);
     await newListing.save();
     res.redirect("/listings");
-})
+}))
 
 //Update get request
-app.get("/listings/:id/edit", async (req, res) => {
+app.get("/listings/:id/edit", wrapAsync(async (req, res) => {
     let { id } = req.params;
     let listing = await Listing.findById(id);
     res.render("./listing/edit.ejs", { listing });
-})
+}))
 //Update Listing
-app.put("/listings/:id", async (req, res) => {
+app.put("/listings/:id", validateListing, wrapAsync(async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndUpdate(id, { ...req.body.listing });
     res.redirect(`/listings/${id}`);
-})
+}))
 
 //Delete listing
-app.delete("/listings/:id", async (req, res) => {
+app.delete("/listings/:id", wrapAsync(async (req, res) => {
     let { id } = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
     res.redirect("/listings");
-})
+}))
 
 app.get("/", (req, res) => {
     res.render("./listing/index.ejs");

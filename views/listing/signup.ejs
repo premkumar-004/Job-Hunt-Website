@@ -3,14 +3,10 @@
     <body>
         <div class="login-container">
             <h2>Signup to Job Hunt</h2>
-            <form class="login-form" method="post" action="/signup">
+            <form class="login-form needs-validation" method="post" action="/signup" novalidate>
                 <div class="form-group">
                     <label for="name">Name <span id="astreik" style="color: red;">*</span></label>
                     <input type="text" id="name" name="user[name]" required>
-                </div>
-                <div class="form-group">
-                    <label for="username">Username <span id="astreik" style="color: red;">*</span></label>
-                    <input type="text" id="username" name="user[username]" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email <span id="astreik" style="color: red;">*</span></label>
@@ -19,11 +15,6 @@
                 <div class="form-group">
                     <label for="mobile">Mobile Number <span id="astreik" style="color: red;">*</span></label>
                     <input type="number" id="mobile" name="user[mobile]" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Create Password <span id="astreik" style="color: red;">*</span></label>
-                    <input type="password" id="password" name="user[password]" required>
                 </div>
                 <div class="form-group">
                     <label for="country">Country <span id="astreik" style="color: red;">*</span></label>
