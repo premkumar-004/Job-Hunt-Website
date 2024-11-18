@@ -483,3 +483,173 @@ a {
     margin-left: 2.5rem !important;
     margin-top: 0 !important;
 }
+
+/*Privacy Page*/
+/* Privacy Policy Styling */
+.privacy-policy h1 {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.privacy-policy h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #343a40;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 5px;
+}
+
+.privacy-policy p,
+.privacy-policy ul {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+.privacy-policy .list-group-item {
+    border: none;
+    padding: 10px 15px;
+    background: #f9f9f9;
+    margin-bottom: 5px;
+    border-left: 4px solid #007bff;
+}
+
+.privacy-policy a {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.privacy-policy a:hover {
+    text-decoration: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .privacy-policy h1 {
+        font-size: 2.2rem;
+    }
+
+    .privacy-policy h2 {
+        font-size: 1.5rem;
+    }
+
+    .privacy-policy p,
+    .privacy-policy ul {
+        font-size: 0.95rem;
+    }
+}
+
+/* General Styling for Terms and Conditions */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    color: #343a40;
+}
+
+.terms-and-conditions {
+    background: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 40px 30px;
+    border-radius: 8px;
+}
+
+.terms-and-conditions h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #0d6efd;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 3px solid #0d6efd;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+.terms-and-conditions h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #0c4da2;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.terms-and-conditions h2::after {
+    content: "";
+    width: 50px;
+    height: 3px;
+    background-color: #0d6efd;
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+}
+
+.terms-and-conditions p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    color: #495057;
+}
+
+.terms-and-conditions ul {
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.terms-and-conditions .list-group-item {
+    border: none;
+    background-color: #f0f4fa;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-left: 5px solid #0d6efd;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.terms-and-conditions .list-group-item:hover {
+    background-color: #e3eaf5;
+}
+
+.terms-and-conditions a {
+    color: #0d6efd;
+    font-weight: 500;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+}
+
+.terms-and-conditions a:hover {
+    color: #062a65;
+    text-decoration: none;
+}
+
+/* Call-to-Action Section */
+.terms-and-conditions .contact-info {
+    font-size: 1.1rem;
+    padding: 20px;
+    background-color: #f8f9fc;
+    border: 1px solid #e3e6f0;
+    border-radius: 6px;
+}
+
+.terms-and-conditions .contact-info a {
+    font-weight: bold;
+    color: #0d6efd;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .terms-and-conditions {
+        padding: 30px 20px;
+    }
+
+    .terms-and-conditions h1 {
+        font-size: 2.4rem;
+    }
+
+    .terms-and-conditions h2 {
+        font-size: 1.6rem;
+    }
+
+    .terms-and-conditions p,
+    .terms-and-conditions ul {
+        font-size: 1rem;
+    }
+}
