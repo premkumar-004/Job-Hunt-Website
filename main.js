@@ -9,11 +9,12 @@ const methodOverride = require("method-override");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
 const Listing = require("./models/listing.js");
-const { validateListing } = require("./middleware.js");
+const { validateListing, isLoggedIn } = require("./middleware.js");
 const session = require("express-session");
 const flash = require("connect-flash");
-const passport = require("passport");
-const LocalStrategy = require("passport-local");
+const bcrypt = require('bcrypt');
+const cookieParser = require("cookie-parser");
+const jwt = require("jsonwebtoken");
 
 app.set("view engine", "ejs");
 app.use(express.json());
@@ -22,6 +23,7 @@ app.use(methodOverride("_method"));
 app.set("views", path.join(__dirname, "/views"));
 app.use(express.static(path.join(__dirname, '/public')));
 app.engine("ejs", ejsMate);
+
 
 
 main().then(res => {
@@ -47,18 +49,14 @@ const sessionOptions = {
 
 app.use(session(sessionOptions));
 app.use(flash());
-app.use(passport.initialize());
-app.use(passport.session());
-
-// passport.use(new LocalStrategy(User.authenticate()));
-
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
+app.use(cookieParser());
 
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.currUser = req.user;
+    console.log(req.user);
+
     next();
 })
 
@@ -122,8 +120,17 @@ app.get("/signup", (req, res) => {
 app.post("/signup", async (req, res) => {
     const newUser = await new User({ ...req.body.user });
     console.log(newUser);
-    await newUser.save();
-    res.redirect("/login");
+    let passcode = newUser.password;
+    bcrypt.genSalt(10, function (err, salt) {
+        bcrypt.hash(passcode, salt, async (err, hash) => {
+            newUser.password = hash;
+            await newUser.save();
+            let token = jwt.sign((newUser.username), "mysecretcode");
+            res.cookie("token", token);
+            res.redirect("/login");
+        });
+
+    });
 })
 
 //contact
@@ -140,12 +147,30 @@ app.get("/login", (req, res) => {
     res.render("./listing/login.ejs");
 })
 
-app.post("/login", (req, res) => {
-    let user = req.body;
-    console.log(user);
-    res.redirect("/");
+app.post("/login", async (req, res) => {
+    let { username, password } = req.body;
+    console.log(username);
+    let currUser = await User.findOne({ username: username });
+    console.log(currUser);
+    if (!currUser) {
+        req.flash("error", "Incorrect username or password");
+        return res.redirect("/login");
+    }
+    else {
+        bcrypt.compare(password, currUser.password, (err, result) => {
+            if (result) {
+                let token = jwt.sign({ username: currUser.username }, "mysecretcode");
+                res.cookie("token", token);
+                return res.redirect("/listings");
+            }
+        })
+    }
 })
 
+app.get("/logout", (req, res) => {
+    res.cookie("token", "");
+    res.redirect("/listings");
+})
 
 app.get("/privacy", (req, res) => {
     res.render("./contacts/privacy.ejs");
