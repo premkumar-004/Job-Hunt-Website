@@ -50,10 +50,10 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(new LocalStrategy(User.authenticate()));
+// passport.use(new LocalStrategy(User.authenticate()));
 
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
@@ -106,12 +106,25 @@ app.put("/listings/:id", validateListing, wrapAsync(async (req, res) => {
 app.delete("/listings/:id", wrapAsync(async (req, res) => {
     let { id } = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
+    req.flash("success", "Listing Deleted Successfully");
     res.redirect("/listings");
 }))
+
 
 app.get("/", (req, res) => {
     res.render("./listing/index.ejs");
 });
+
+app.get("/signup", (req, res) => {
+    res.render("./listing/signup.ejs");
+})
+
+app.post("/signup", async (req, res) => {
+    const newUser = await new User({ ...req.body.user });
+    console.log(newUser);
+    await newUser.save();
+    res.redirect("/login");
+})
 
 //contact
 app.get("/contact", (req, res) => {
@@ -133,15 +146,6 @@ app.post("/login", (req, res) => {
     res.redirect("/");
 })
 
-app.get("/signup", (req, res) => {
-    res.render("./listing/signup.ejs");
-})
-
-app.post("/signup", (req, res) => {
-    let data = req.body;
-    console.log(data);
-    res.redirect("/listing/login");
-})
 
 app.get("/privacy", (req, res) => {
     res.render("./contacts/privacy.ejs");

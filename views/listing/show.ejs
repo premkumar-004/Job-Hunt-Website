@@ -1,32 +1,70 @@
-<% layout("/layouts/boilerplate.ejs") %>
+<%# Improved Job Listing Details Page with Tailwind CSS %>
+    <% layout("/layouts/boilerplate.ejs") %>
 
-    <body>
-        <div class="row mt-3">
-            <div class="col-8 offset-3">
-                <h3>
-                    <%= listing.title %>
-                </h3>
-            </div>
-            <div class="card col-6 offset-3 show-card listing-card">
-                <img src="<%= listing.image.url %>" class="card-img-top show-img" alt="listing_image">
-                <div class="card-body">
-                    <p class="card-text mt-2">
-                        <b>
+        <div class="container mx-auto px-4 py-8">
+            <div class="max-w-2xl mx-auto bg-white shadow-lg rounded-xl overflow-hidden">
+                <div class="relative">
+                    <img src="<%= listing.image.url %>" alt="<%= listing.title %>" class="w-full h-80 object-cover">
+                    <div class="absolute top-4 left-4 bg-white/80 px-4 py-2 rounded-md">
+                        <h1 class="text-2xl font-bold text-gray-800">
+                            <%= listing.title %>
+                        </h1>
+                    </div>
+                </div>
+
+                <div class="p-6">
+                    <div class="mb-4">
+                        <h2 class="text-xl font-semibold text-gray-700 mb-2">Job Description</h2>
+                        <p class="text-gray-600">
                             <%= listing.description %>
-                        </b> <br>
-                        <span>Payment : </span><b>&#x20B9 <%= listing.payment.toLocaleString("en-IN") %></b> <br>
-                        <%= listing.location %> <br>
-                            <%= listing.country %>
-                    </p>
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <div class="flex items-center mb-2">
+                                <svg class="w-5 h-5 mr-2 text-green-500" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                    </path>
+                                </svg>
+                                <span class="font-medium">Payment</span>
+                            </div>
+                            <p class="text-xl font-bold text-gray-800">
+                                &#x20B9 <%= listing.payment.toLocaleString("en-IN") %>
+                            </p>
+                        </div>
+                        <div>
+                            <div class="flex items-center mb-2">
+                                <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                    </path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                                <span class="font-medium">Location</span>
+                            </div>
+                            <p class="text-gray-700">
+                                <%= listing.location %>, <%= listing.country %>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex space-x-4 mt-6">
+                        <a href="/listings/<%= listing._id %>/edit"
+                            class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md transition duration-300 text-center">
+                            Edit Listing
+                        </a>
+                        <form method="post" action="/listings/<%= listing._id %>?_method=DELETE" class="flex-1">
+                            <button type="submit"
+                                class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-md transition duration-300">
+                                Delete Listing
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- <br> -->
-        <div class="btns">
-            <a href="/listings/<%= listing._id %>/edit"
-                class="btn btn-dark col-1 offset-3 show-edit-btn edit-btn">Edit</a><br><br>
-            <form method="post" action="/listings/<%= listing._id %>?_method=DELETE">
-                <button class="btn btn-dark offset-5">Delete</button>
-            </form>
-        </div>
-    </body>
