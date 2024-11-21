@@ -24,8 +24,6 @@ app.set("views", path.join(__dirname, "/views"));
 app.use(express.static(path.join(__dirname, '/public')));
 app.engine("ejs", ejsMate);
 
-
-
 main().then(res => {
     console.log("Connection with DB successful");
 })
@@ -51,12 +49,28 @@ app.use(session(sessionOptions));
 app.use(flash());
 app.use(cookieParser());
 
+// Middleware to store the currently logged-in user
+app.use(async (req, res, next) => {
+    const token = req.cookies.token; // Extract the token from cookies
+    if (token) {
+        try {
+            const decoded = jwt.verify(token, "mysecretcode"); // Verify the token
+            const user = await User.findOne({ username: decoded.username }); // Fetch user details
+            res.locals.currUser = user; // Set the user in res.locals
+        } catch (err) {
+            console.error("Error verifying token:", err); // Log the error
+            res.locals.currUser = null; // Ensure no user is set on error
+        }
+    } else {
+        res.locals.currUser = null; // No token means no logged-in user
+    }
+    next();
+});
+
+// Middleware for flash messages
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
-    res.locals.currUser = req.user;
-    console.log(req.user);
-
     next();
 })
 
@@ -71,7 +85,6 @@ app.get("/listings/new", (req, res) => {
     res.render("./listing/new.ejs");
 })
 
-
 //show route
 app.get("/listings/:id", wrapAsync(async (req, res) => {
     let { id } = req.params;
@@ -79,7 +92,7 @@ app.get("/listings/:id", wrapAsync(async (req, res) => {
     res.render("./listing/show.ejs", { listing });
 }));
 //create new listing
-app.post("/listings", validateListing, wrapAsync(async (req, res) => {
+app.post("/listings", isLoggedIn, validateListing, wrapAsync(async (req, res) => {
     const newListing = new Listing(req.body.listing);
     await newListing.save();
     req.flash("success", "New Listing Created");
@@ -93,7 +106,7 @@ app.get("/listings/:id/edit", wrapAsync(async (req, res) => {
     res.render("./listing/edit.ejs", { listing });
 }))
 //Update Listing
-app.put("/listings/:id", validateListing, wrapAsync(async (req, res) => {
+app.put("/listings/:id", isLoggedIn, validateListing, wrapAsync(async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndUpdate(id, { ...req.body.listing });
     req.flash("success", "Listing Updated Successfully");
@@ -108,7 +121,6 @@ app.delete("/listings/:id", wrapAsync(async (req, res) => {
     res.redirect("/listings");
 }))
 
-
 app.get("/", (req, res) => {
     res.render("./listing/index.ejs");
 });
@@ -119,7 +131,6 @@ app.get("/signup", (req, res) => {
 
 app.post("/signup", async (req, res) => {
     const newUser = await new User({ ...req.body.user });
-    console.log(newUser);
     let passcode = newUser.password;
     bcrypt.genSalt(10, function (err, salt) {
         bcrypt.hash(passcode, salt, async (err, hash) => {
@@ -188,7 +199,6 @@ app.use((err, req, res, next) => {
     const { statusCode = 500, message = "Something went wrong" } = err;
     res.status(statusCode).render("error.ejs", { message });
 });
-
 
 app.listen(port, (req, res) => {
     console.log(`Listening on Port no. ${port}`);
