@@ -15,8 +15,19 @@
         <li><a href="/listings/new">Post a Job</a></li>
         <% if(!currUser){ %>
             <li><a href="/login">Login</a></li>
-            <% }else{ %>
-                <li><a href="/logout">Logout</a></li>
+            <% } else { %>
+                <li class="profile-dropdown">
+                    <div class="profile-container">
+                        <img src="https://t4.ftcdn.net/jpg/06/48/39/19/360_F_648391979_uMz6EwAlKNIJnK9r46UpTiM17nT8GuLl.jpg"
+                            alt="Profile" class="profile-image">
+                        <div class="dropdown-content">
+                            <a href="/profile">My Profile</a>
+                            <a href="/listings/user">Your Listings</a>
+                            <a href="/applications">Your Applications</a>
+                            <a href="/logout">Logout</a>
+                        </div>
+                    </div>
+                </li>
                 <% } %>
     </ul>
 </nav>

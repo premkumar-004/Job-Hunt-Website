@@ -88,12 +88,13 @@ app.get("/listings/new", (req, res) => {
 //show route
 app.get("/listings/:id", wrapAsync(async (req, res) => {
     let { id } = req.params;
-    const listing = await Listing.findById(id);
+    const listing = await Listing.findById(id).populate("postedBy");
     res.render("./listing/show.ejs", { listing });
 }));
 //create new listing
 app.post("/listings", isLoggedIn, validateListing, wrapAsync(async (req, res) => {
     const newListing = new Listing(req.body.listing);
+    newListing.postedBy = req.user._id;
     await newListing.save();
     req.flash("success", "New Listing Created");
     res.redirect("/listings");
@@ -160,9 +161,7 @@ app.get("/login", (req, res) => {
 
 app.post("/login", async (req, res) => {
     let { username, password } = req.body;
-    console.log(username);
     let currUser = await User.findOne({ username: username });
-    console.log(currUser);
     if (!currUser) {
         req.flash("error", "Incorrect username or password");
         return res.redirect("/login");
@@ -172,6 +171,7 @@ app.post("/login", async (req, res) => {
             if (result) {
                 let token = jwt.sign({ username: currUser.username }, "mysecretcode");
                 res.cookie("token", token);
+                req.flash("success", "Logged In Successfully");
                 return res.redirect("/listings");
             }
         })
@@ -180,6 +180,7 @@ app.post("/login", async (req, res) => {
 
 app.get("/logout", (req, res) => {
     res.cookie("token", "");
+    req.flash("success", "Logged Out Successfully");
     res.redirect("/listings");
 })
 
