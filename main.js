@@ -184,6 +184,24 @@ app.get("/logout", (req, res) => {
     res.redirect("/listings");
 })
 
+
+//Users Routes
+app.get('/users/profile', isLoggedIn, async (req, res) => {
+    // For temporary use, you can use fake values
+    const user = {
+        name: 'John Doe',
+        username: 'johndoe',
+        email: 'john@example.com',
+        phone: 1234567890,
+        country: 'United States',
+        state: 'California',
+        city: 'San Francisco',
+        pincode: 94105
+    };
+
+    res.render("./users/profile.ejs", { user });
+});
+
 app.get("/privacy", (req, res) => {
     res.render("./contacts/privacy.ejs");
 })

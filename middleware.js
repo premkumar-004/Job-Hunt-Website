@@ -20,7 +20,6 @@ module.exports.isLoggedIn = async (req, res, next) => {
     }
     try {
         let decoded = jwt.verify(req.cookies.token, "mysecretcode");
-        console.log(decoded);
         let user = await User.findOne({ username: decoded.username }).select("-password");
         req.user = user;
         next();
