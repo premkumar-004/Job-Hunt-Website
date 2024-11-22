@@ -1,55 +1,14 @@
 <%# Improved Job Listings Page with Responsive Design %>
     <% layout("/layouts/boilerplate.ejs") %>
 
-        <div class="container mx-auto px-4 py-8">
-            <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">Find Relevant Jobs</h1>
+        <body>
+            <div class="container mx-auto px-4 py-8">
+                <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">Find Relevant Jobs</h1>
 
-            <% if (allListings && allListings.length> 0) { %>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    <% for(let listing of allListings){ %>
-                        <% if (currUser && !(currUser._id.equals(listing.postedBy._id))) { %>
-                            <a href="/listings/<%= listing._id %>"
-                                class="transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100">
-                                    <div class="relative h-48 overflow-hidden">
-                                        <img src="<%= listing.image %>" alt="<%= listing.title %>"
-                                            class="w-full h-full object-cover">
-                                        <div
-                                            class="absolute inset-0 bg-black opacity-20 hover:opacity-10 transition-opacity">
-                                        </div>
-                                    </div>
-
-                                    <div class="p-4">
-                                        <h2 class="text-xl font-semibold text-gray-800 mb-2 truncate">
-                                            <%= listing.title %>
-                                        </h2>
-
-                                        <div class="flex items-center text-gray-600 mb-2">
-                                            <svg class="w-5 h-5 mr-2 text-green-500" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-                                                </path>
-                                            </svg>
-                                            <span class="text-base">
-                                                Payment:
-                                                <strong>&#8377; <%= listing.payment ?
-                                                        listing.payment.toLocaleString("en-IN") : "N/A" %> /-</strong>
-                                            </span>
-                                        </div>
-
-                                        <div class="flex justify-between items-center mt-4">
-                                            <span class="text-sm text-gray-500">View Details</span>
-                                            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor"
-                                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                            <% }else if(!currUser){ %>
+                <% if (allListings && allListings.length> 0) { %>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        <% for(let listing of allListings){ %>
+                            <% if (currUser && !(currUser._id.equals(listing.postedBy._id))) { %>
                                 <a href="/listings/<%= listing._id %>"
                                     class="transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
                                     <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100">
@@ -88,24 +47,71 @@
                                                 <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor"
                                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7">
-                                                    </path>
+                                                        stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
                                                 </svg>
                                             </div>
                                         </div>
                                     </div>
                                 </a>
-                                <% } %>
+                                <% }else if(!currUser){ %>
+                                    <a href="/listings/<%= listing._id %>"
+                                        class="transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                        <div
+                                            class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100">
+                                            <div class="relative h-48 overflow-hidden">
+                                                <img src="<%= listing.image %>" alt="<%= listing.title %>"
+                                                    class="w-full h-full object-cover">
+                                                <div
+                                                    class="absolute inset-0 bg-black opacity-20 hover:opacity-10 transition-opacity">
+                                                </div>
+                                            </div>
+
+                                            <div class="p-4">
+                                                <h2 class="text-xl font-semibold text-gray-800 mb-2 truncate">
+                                                    <%= listing.title %>
+                                                </h2>
+
+                                                <div class="flex items-center text-gray-600 mb-2">
+                                                    <svg class="w-5 h-5 mr-2 text-green-500" fill="none"
+                                                        stroke="currentColor" viewBox="0 0 24 24"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                                        </path>
+                                                    </svg>
+                                                    <span class="text-base">
+                                                        Payment:
+                                                        <strong>&#8377; <%= listing.payment ?
+                                                                listing.payment.toLocaleString("en-IN") : "N/A" %>
+                                                                /-</strong>
+                                                    </span>
+                                                </div>
+
+                                                <div class="flex justify-between items-center mt-4">
+                                                    <span class="text-sm text-gray-500">View Details</span>
+                                                    <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor"
+                                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7">
+                                                        </path>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
                                     <% } %>
-                </div>
-                <% } else { %>
-                    <div class="text-center py-12 bg-gray-50 rounded-lg">
-                        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <p class="mt-4 text-xl text-gray-600">No Job Listings Available</p>
+                                        <% } %>
                     </div>
-                    <% } %>
-        </div>
+                    <% } else { %>
+                        <div class="text-center py-12 bg-gray-50 rounded-lg">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <p class="mt-4 text-xl text-gray-600">No Job Listings Available</p>
+                        </div>
+                        <% } %>
+            </div>
+        </body>
