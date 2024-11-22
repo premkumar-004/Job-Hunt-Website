@@ -206,7 +206,11 @@ app.get("/users/applications", isLoggedIn, async (req, res) => {
     let allListings = await Listing.find({});
     res.render("./users/myApplications.ejs", { allListings });
 })
-
+app.get("/users/mylistings", isLoggedIn, async (req, res) => {
+    let user = req.user;
+    let allListings = await Listing.find({});
+    res.render("./users/myJobListings.ejs", { allListings });
+})
 app.get("/privacy", (req, res) => {
     res.render("./contacts/privacy.ejs");
 })
