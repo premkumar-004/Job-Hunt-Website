@@ -88,7 +88,7 @@ app.get("/listings/new", (req, res) => {
 //show route
 app.get("/listings/:id", wrapAsync(async (req, res) => {
     let { id } = req.params;
-    const listing = await Listing.findById(id).populate("postedBy");
+    const listing = await Listing.findById(id).populate("postedBy").populate("applicants");
     res.render("./listing/show.ejs", { listing });
 }));
 //create new listing
@@ -198,9 +198,14 @@ app.get('/users/profile', isLoggedIn, async (req, res) => {
         city: 'San Francisco',
         pincode: 94105
     };
-
     res.render("./users/profile.ejs", { user });
 });
+//My applications Route
+app.get("/users/applications", isLoggedIn, async (req, res) => {
+    let user = req.user;
+    let allListings = await Listing.find({});
+    res.render("./users/myApplications.ejs", { allListings });
+})
 
 app.get("/privacy", (req, res) => {
     res.render("./contacts/privacy.ejs");
@@ -208,6 +213,30 @@ app.get("/privacy", (req, res) => {
 app.get("/terms", (req, res) => {
     res.render("./contacts/terms.ejs");
 })
+
+app.post('/listings/:id/apply', isLoggedIn, wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    let listing = await Listing.findById(id);
+    listing.applicants.push(req.user._id);
+    await listing.save();
+    req.flash("success", "Applied Successfully");
+    res.redirect(`/listings/${id}`);
+}))
+app.delete('/listings/:id/remove', isLoggedIn, wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    let listing = await Listing.findById(id);
+    let user = req.user;
+    const index = listing.applicants.indexOf(user._id);
+    if (index != -1) {
+        listing.applicants.splice(index, 1);
+        req.flash("success", "removed application successfully");
+        await listing.save();
+        return res.redirect("/users/applications");
+    } else {
+        req.flash("error", "cannot remove");
+    }
+    res.redirect("/users/applications");
+}))
 // Page not found Route
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Page Not Found"));
