@@ -211,6 +211,11 @@ app.get("/users/mylistings", isLoggedIn, async (req, res) => {
     let allListings = await Listing.find({});
     res.render("./users/myJobListings.ejs", { allListings });
 })
+app.get("/users/:id", wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    let user = await User.findById(id);
+    res.render("./users/viewprofile.ejs", { user });
+}))
 app.get("/privacy", (req, res) => {
     res.render("./contacts/privacy.ejs");
 })
@@ -241,6 +246,13 @@ app.delete('/listings/:id/remove', isLoggedIn, wrapAsync(async (req, res) => {
     }
     res.redirect("/users/applications");
 }))
+
+app.get("/listings/:id/applicants", wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    let listing = await Listing.findById(id).populate("applicants");
+    res.render("./users/viewApplicants.ejs", { listing });
+}))
+
 // Page not found Route
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Page Not Found"));
