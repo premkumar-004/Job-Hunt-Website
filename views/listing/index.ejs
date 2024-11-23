@@ -1,117 +1,257 @@
-<%# Improved Job Listings Page with Responsive Design %>
+<%# Landing Page for Non-logged in Users %>
     <% layout("/layouts/boilerplate.ejs") %>
 
         <body>
-            <div class="container mx-auto px-4 py-8">
-                <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">Find Relevant Jobs</h1>
-
-                <% if (allListings && allListings.length> 0) { %>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        <% for(let listing of allListings){ %>
-                            <% if (currUser && !(currUser._id.equals(listing.postedBy._id))) { %>
-                                <a href="/listings/<%= listing._id %>"
-                                    class="transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                                    <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100">
-                                        <div class="relative h-48 overflow-hidden">
-                                            <img src="<%= listing.image %>" alt="<%= listing.title %>"
-                                                class="w-full h-full object-cover">
-                                            <div
-                                                class="absolute inset-0 bg-black opacity-20 hover:opacity-10 transition-opacity">
-                                            </div>
-                                        </div>
-
-                                        <div class="p-4">
-                                            <h2 class="text-xl font-semibold text-gray-800 mb-2 truncate">
-                                                <%= listing.title %>
-                                            </h2>
-
-                                            <div class="flex items-center text-gray-600 mb-2">
-                                                <svg class="w-5 h-5 mr-2 text-green-500" fill="none"
-                                                    stroke="currentColor" viewBox="0 0 24 24"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2"
-                                                        d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-                                                    </path>
-                                                </svg>
-                                                <span class="text-base">
-                                                    Payment:
-                                                    <strong>&#8377; <%= listing.payment ?
-                                                            listing.payment.toLocaleString("en-IN") : "N/A" %>
-                                                            /-</strong>
-                                                </span>
-                                            </div>
-
-                                            <div class="flex justify-between items-center mt-4">
-                                                <span class="text-sm text-gray-500">View Details</span>
-                                                <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor"
-                                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
-                                                </svg>
-                                            </div>
-                                        </div>
-                                    </div>
+            <div class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+                <% if (!currUser) { %>
+                    <!-- Hero Section -->
+                    <div class="container mx-auto px-4 py-16">
+                        <div class="text-center">
+                            <h1 class="text-5xl font-bold text-gray-900 mb-6">Find Your Dream Job Today</h1>
+                            <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                                Connect with top employers and discover opportunities that match your skills and
+                                aspirations.
+                                Join our community of professionals taking the next step in their careers.
+                            </p>
+                            <div class="flex gap-4 justify-center">
+                                <a href="/login"
+                                    class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors">
+                                    Login to Begin
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                                            clip-rule="evenodd" />
+                                    </svg>
                                 </a>
-                                <% }else if(!currUser){ %>
-                                    <a href="/listings/<%= listing._id %>"
-                                        class="transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
-                                        <div
-                                            class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100">
-                                            <div class="relative h-48 overflow-hidden">
-                                                <img src="<%= listing.image %>" alt="<%= listing.title %>"
-                                                    class="w-full h-full object-cover">
-                                                <div
-                                                    class="absolute inset-0 bg-black opacity-20 hover:opacity-10 transition-opacity">
-                                                </div>
-                                            </div>
+                                <a href="#features"
+                                    class="inline-flex items-center px-6 py-3 bg-white hover:bg-gray-50 text-gray-800 font-semibold rounded-lg border border-gray-300 transition-colors">
+                                    Learn More
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
-                                            <div class="p-4">
-                                                <h2 class="text-xl font-semibold text-gray-800 mb-2 truncate">
-                                                    <%= listing.title %>
-                                                </h2>
+                    <!-- Features Section -->
+                    <div id="features" class="container mx-auto px-4 py-16">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                            <!-- Feature 1 -->
+                            <div
+                                class="bg-white rounded-xl p-6 text-center hover:shadow-lg transition-shadow border border-gray-100">
+                                <div
+                                    class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">Curated Jobs</h3>
+                                <p class="text-gray-600">Handpicked opportunities from verified employers across
+                                    industries
+                                </p>
+                            </div>
 
-                                                <div class="flex items-center text-gray-600 mb-2">
-                                                    <svg class="w-5 h-5 mr-2 text-green-500" fill="none"
-                                                        stroke="currentColor" viewBox="0 0 24 24"
-                                                        xmlns="http://www.w3.org/2000/svg">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2"
-                                                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-                                                        </path>
-                                                    </svg>
-                                                    <span class="text-base">
-                                                        Payment:
-                                                        <strong>&#8377; <%= listing.payment ?
-                                                                listing.payment.toLocaleString("en-IN") : "N/A" %>
-                                                                /-</strong>
-                                                    </span>
-                                                </div>
+                            <!-- Feature 2 -->
+                            <div
+                                class="bg-white rounded-xl p-6 text-center hover:shadow-lg transition-shadow border border-gray-100">
+                                <div
+                                    class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">Professional Network</h3>
+                                <p class="text-gray-600">Connect with industry professionals and grow your network</p>
+                            </div>
 
-                                                <div class="flex justify-between items-center mt-4">
-                                                    <span class="text-sm text-gray-500">View Details</span>
-                                                    <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor"
-                                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7">
-                                                        </path>
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <% } %>
-                                        <% } %>
+                            <!-- Feature 3 -->
+                            <div
+                                class="bg-white rounded-xl p-6 text-center hover:shadow-lg transition-shadow border border-gray-100">
+                                <div
+                                    class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">Perfect Match</h3>
+                                <p class="text-gray-600">Smart matching algorithm to find the right job for your skills
+                                </p>
+                            </div>
+
+                            <!-- Feature 4 -->
+                            <div
+                                class="bg-white rounded-xl p-6 text-center hover:shadow-lg transition-shadow border border-gray-100">
+                                <div
+                                    class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl font-semibold mb-2">Verified Listings</h3>
+                                <p class="text-gray-600">All job listings are verified for authenticity and quality</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Statistics Section -->
+                    <div class="bg-blue-600 text-white py-16">
+                        <div class="container mx-auto px-4">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                                <div class="p-6">
+                                    <h3 class="text-4xl font-bold mb-2">10,000+</h3>
+                                    <p class="text-blue-100">Active Job Listings</p>
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-4xl font-bold mb-2">5,000+</h3>
+                                    <p class="text-blue-100">Successful Placements</p>
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-4xl font-bold mb-2">2,000+</h3>
+                                    <p class="text-blue-100">Partner Companies</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Call to Action -->
+                    <div class="container mx-auto px-4 py-16 text-center">
+                        <h2 class="text-3xl font-bold mb-6">Ready to Start Your Journey?</h2>
+                        <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                            Join thousands of professionals who have found their perfect job match through our platform.
+                        </p>
+                        <a href="/login"
+                            class="inline-flex items-center px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold rounded-lg transition-colors">
+                            Login to Begin
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </a>
                     </div>
                     <% } else { %>
-                        <div class="text-center py-12 bg-gray-50 rounded-lg">
-                            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <p class="mt-4 text-xl text-gray-600">No Job Listings Available</p>
-                        </div>
-                        <% } %>
+                        <!-- Original Job Listings Content -->
+                        <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">Find Relevant Jobs</h1>
+                        <% if (allListings && allListings.length> 0) { %>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                                <% for(let listing of allListings){ %>
+                                    <% if (currUser && !(currUser._id.equals(listing.postedBy._id))) { %>
+                                        <a href="/listings/<%= listing._id %>"
+                                            class="transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                            <div
+                                                class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100">
+                                                <div class="relative h-48 overflow-hidden">
+                                                    <img src="<%= listing.image %>" alt="<%= listing.title %>"
+                                                        class="w-full h-full object-cover">
+                                                    <div
+                                                        class="absolute inset-0 bg-black opacity-20 hover:opacity-10 transition-opacity">
+                                                    </div>
+                                                </div>
+
+                                                <div class="p-4">
+                                                    <h2 class="text-xl font-semibold text-gray-800 mb-2 truncate">
+                                                        <%= listing.title %>
+                                                    </h2>
+
+                                                    <div class="flex items-center text-gray-600 mb-2">
+                                                        <svg class="w-5 h-5 mr-2 text-green-500" fill="none"
+                                                            stroke="currentColor" viewBox="0 0 24 24"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2"
+                                                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                                            </path>
+                                                        </svg>
+                                                        <span class="text-base">
+                                                            Payment:
+                                                            <strong>&#8377; <%= listing.payment ?
+                                                                    listing.payment.toLocaleString("en-IN") : "N/A" %>
+                                                                    /-</strong>
+                                                        </span>
+                                                    </div>
+
+                                                    <div class="flex justify-between items-center mt-4">
+                                                        <span class="text-sm text-gray-500">View Details</span>
+                                                        <svg class="w-5 h-5 text-blue-500" fill="none"
+                                                            stroke="currentColor" viewBox="0 0 24 24"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path>
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <% }else if(!currUser){ %>
+                                            <a href="/listings/<%= listing._id %>"
+                                                class="transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                                <div
+                                                    class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100">
+                                                    <div class="relative h-48 overflow-hidden">
+                                                        <img src="<%= listing.image %>" alt="<%= listing.title %>"
+                                                            class="w-full h-full object-cover">
+                                                        <div
+                                                            class="absolute inset-0 bg-black opacity-20 hover:opacity-10 transition-opacity">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="p-4">
+                                                        <h2 class="text-xl font-semibold text-gray-800 mb-2 truncate">
+                                                            <%= listing.title %>
+                                                        </h2>
+
+                                                        <div class="flex items-center text-gray-600 mb-2">
+                                                            <svg class="w-5 h-5 mr-2 text-green-500" fill="none"
+                                                                stroke="currentColor" viewBox="0 0 24 24"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2"
+                                                                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                                                </path>
+                                                            </svg>
+                                                            <span class="text-base">
+                                                                Payment:
+                                                                <strong>&#8377; <%= listing.payment ?
+                                                                        listing.payment.toLocaleString("en-IN") : "N/A"
+                                                                        %>
+                                                                        /-</strong>
+                                                            </span>
+                                                        </div>
+
+                                                        <div class="flex justify-between items-center mt-4">
+                                                            <span class="text-sm text-gray-500">View Details</span>
+                                                            <svg class="w-5 h-5 text-blue-500" fill="none"
+                                                                stroke="currentColor" viewBox="0 0 24 24"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7">
+                                                                </path>
+                                                            </svg>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <% } %>
+                                                <% } %>
+                            </div>
+                            <% } else { %>
+                                <div class="text-center py-12 bg-gray-50 rounded-lg">
+                                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <p class="mt-4 text-xl text-gray-600">No Job Listings Available</p>
+                                </div>
+                                <% } %>
+                                    <% } %>
             </div>
         </body>
