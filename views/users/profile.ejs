@@ -1,26 +1,26 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
-    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-6">
+    <div class="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center p-6">
         <div class="w-full max-w-4xl">
-            <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
+            <div class="bg-gray-800 rounded-3xl shadow-2xl overflow-hidden border border-gray-700">
                 <!-- Elegant Header -->
-                <div class="relative h-{150px} bg-gradient-to-r from-blue-600 to-purple-700">
-                    <div class="absolute inset-0 opacity-50 bg-pattern"></div>
+                <div class="relative h-{150px} bg-gradient-to-r from-blue-900 to-purple-900">
+                    <div class="absolute inset-0 opacity-30 bg-pattern"></div>
                     <div class="relative z-10 flex items-center justify-center h-full">
                         <div class="text-center">
                             <div class="relative inline-block mt-6">
                                 <img src="<%= currUser.profileImage || 'https://t4.ftcdn.net/jpg/06/48/39/19/360_F_648391979_uMz6EwAlKNIJnK9r46UpTiM17nT8GuLl.jpg' %>"
                                     alt="Profile"
-                                    class="w-48 h-48 rounded-full border-6 border-white object-cover shadow-xl transform transition duration-500 hover:scale-110 hover:rotate-6">
+                                    class="w-48 h-48 rounded-full border-6 border-gray-700 object-cover shadow-xl transform transition duration-500 hover:scale-110 hover:rotate-6">
                                 <div
-                                    class="absolute bottom-4 right-4 bg-green-500 w-12 h-12 rounded-full flex items-center justify-center text-white shadow-lg border-4 border-white">
+                                    class="absolute bottom-4 right-4 bg-emerald-500 w-12 h-12 rounded-full flex items-center justify-center text-gray-900 shadow-lg border-4 border-gray-700">
                                     <i class="fas fa-check text-xl"></i>
                                 </div>
                             </div>
-                            <h1 class="mt-2  text-4xl font-bold text-white tracking-wide">
+                            <h1 class="mt-2 text-4xl font-bold text-gray-100 tracking-wide">
                                 <%= currUser.name %>
                             </h1>
-                            <p class="text-xl mb-4 text-blue-100 opacity-90">@<%= currUser.username %>
+                            <p class="text-xl mb-4 text-gray-300">@<%= currUser.username %>
                             </p>
                         </div>
                     </div>
@@ -31,18 +31,18 @@
                     <!-- Personal Information -->
                     <div>
                         <h2
-                            class="text-2xl font-semibold text-gray-800 border-b-2 border-gray-200 pb-4 mb-6 flex items-center">
-                            <i class="fas fa-user-circle text-blue-500 mr-3"></i>
+                            class="text-2xl font-semibold text-gray-100 border-b-2 border-gray-700 pb-4 mb-6 flex items-center">
+                            <i class="fas fa-user-circle text-blue-400 mr-3"></i>
                             Personal Details
                         </h2>
                         <div class="grid md:grid-cols-3 gap-6">
                             <div
-                                class="bg-blue-50 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                                class="bg-gray-700/50 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-600">
                                 <div class="flex items-center space-x-4">
-                                    <i class="fas fa-id-badge text-blue-600 text-3xl"></i>
+                                    <i class="fas fa-id-badge text-blue-400 text-3xl"></i>
                                     <div>
-                                        <p class="text-sm text-gray-500">Full Name</p>
-                                        <p class="font-bold text-gray-800 text-lg">
+                                        <p class="text-sm text-gray-400">Full Name</p>
+                                        <p class="font-bold text-gray-100 text-lg">
                                             <%= currUser.name %>
                                         </p>
                                     </div>
@@ -50,13 +50,13 @@
                             </div>
                             <!-- For email section -->
                             <div
-                                class="bg-green-50 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                                class="bg-gray-700/50 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-600">
                                 <div class="flex items-center space-x-4">
-                                    <i class="fas fa-envelope-open text-green-600 text-3xl"></i>
+                                    <i class="fas fa-envelope-open text-emerald-400 text-3xl"></i>
                                     <div class="overflow-hidden min-w-0 relative">
-                                        <p class="text-sm text-gray-500">Email Address</p>
+                                        <p class="text-sm text-gray-400">Email Address</p>
                                         <p id="emailDisplay"
-                                            class="font-bold text-gray-800 text-lg truncate cursor-pointer hover:underline"
+                                            class="font-bold text-gray-100 text-lg truncate cursor-pointer hover:text-blue-400"
                                             onclick="toggleFullEmail(this)">
                                             <%= currUser.email %>
                                         </p>
@@ -64,12 +64,12 @@
                                 </div>
                             </div>
                             <div
-                                class="bg-purple-50 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                                class="bg-gray-700/50 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-600">
                                 <div class="flex items-center space-x-4">
-                                    <i class="fas fa-phone-alt text-purple-600 text-3xl"></i>
+                                    <i class="fas fa-phone-alt text-purple-400 text-3xl"></i>
                                     <div>
-                                        <p class="text-sm text-gray-500">Contact Number</p>
-                                        <p class="font-bold text-gray-800 text-lg">
+                                        <p class="text-sm text-gray-400">Contact Number</p>
+                                        <p class="font-bold text-gray-100 text-lg">
                                             <%= currUser.phone %>
                                         </p>
                                     </div>
@@ -81,54 +81,54 @@
                     <!-- Location Information -->
                     <div>
                         <h2
-                            class="text-2xl font-semibold text-gray-800 border-b-2 border-gray-200 pb-4 mb-6 flex items-center">
-                            <i class="fas fa-map-marked-alt text-blue-500 mr-3"></i>
+                            class="text-2xl font-semibold text-gray-100 border-b-2 border-gray-700 pb-4 mb-6 flex items-center">
+                            <i class="fas fa-map-marked-alt text-blue-400 mr-3"></i>
                             Location Information
                         </h2>
                         <div class="grid md:grid-cols-2 gap-6">
                             <div
-                                class="bg-indigo-50 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                                class="bg-gray-700/50 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-600">
                                 <div class="flex items-center space-x-4">
-                                    <i class="fas fa-globe text-indigo-600 text-3xl"></i>
+                                    <i class="fas fa-globe text-indigo-400 text-3xl"></i>
                                     <div>
-                                        <p class="text-sm text-gray-500">Country</p>
-                                        <p class="font-bold text-gray-800 text-lg">
+                                        <p class="text-sm text-gray-400">Country</p>
+                                        <p class="font-bold text-gray-100 text-lg">
                                             <%= currUser.country %>
                                         </p>
                                     </div>
                                 </div>
                             </div>
                             <div
-                                class="bg-pink-50 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                                class="bg-gray-700/50 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-600">
                                 <div class="flex items-center space-x-4">
-                                    <i class="fas fa-map text-pink-600 text-3xl"></i>
+                                    <i class="fas fa-map text-pink-400 text-3xl"></i>
                                     <div>
-                                        <p class="text-sm text-gray-500">State</p>
-                                        <p class="font-bold text-gray-800 text-lg">
+                                        <p class="text-sm text-gray-400">State</p>
+                                        <p class="font-bold text-gray-100 text-lg">
                                             <%= currUser.state %>
                                         </p>
                                     </div>
                                 </div>
                             </div>
                             <div
-                                class="bg-orange-50 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                                class="bg-gray-700/50 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-600">
                                 <div class="flex items-center space-x-4">
-                                    <i class="fas fa-city text-orange-600 text-3xl"></i>
+                                    <i class="fas fa-city text-orange-400 text-3xl"></i>
                                     <div>
-                                        <p class="text-sm text-gray-500">City</p>
-                                        <p class="font-bold text-gray-800 text-lg">
+                                        <p class="text-sm text-gray-400">City</p>
+                                        <p class="font-bold text-gray-100 text-lg">
                                             <%= currUser.city %>
                                         </p>
                                     </div>
                                 </div>
                             </div>
                             <div
-                                class="bg-teal-50 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                                class="bg-gray-700/50 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-600">
                                 <div class="flex items-center space-x-4">
-                                    <i class="fas fa-map-pin text-teal-600 text-3xl"></i>
+                                    <i class="fas fa-map-pin text-teal-400 text-3xl"></i>
                                     <div>
-                                        <p class="text-sm text-gray-500">Pincode</p>
-                                        <p class="font-bold text-gray-800 text-lg">
+                                        <p class="text-sm text-gray-400">Pincode</p>
+                                        <p class="font-bold text-gray-100 text-lg">
                                             <%= currUser.pincode %>
                                         </p>
                                     </div>
@@ -140,12 +140,12 @@
                     <!-- Action Buttons -->
                     <div class="grid md:grid-cols-2 gap-6">
                         <a href="/users/profile/edit"
-                            class="bg-gradient-to-r from-blue-500 to-blue-700 text-white py-4 rounded-xl text-center font-semibold shadow-lg hover:from-blue-600 hover:to-blue-800 transition duration-300 transform hover:-translate-y-1 flex items-center justify-center space-x-3">
+                            class="bg-gradient-to-r from-blue-600 to-blue-800 text-gray-100 py-4 rounded-xl text-center font-semibold shadow-lg hover:from-blue-700 hover:to-blue-900 transition duration-300 transform hover:-translate-y-1 flex items-center justify-center space-x-3">
                             <i class="fas fa-edit"></i>
                             <span>Edit Profile</span>
                         </a>
                         <a href="/users/change-password"
-                            class="bg-gradient-to-r from-red-500 to-red-700 text-white py-4 rounded-xl text-center font-semibold shadow-lg hover:from-red-600 hover:to-red-800 transition duration-300 transform hover:-translate-y-1 flex items-center justify-center space-x-3">
+                            class="bg-gradient-to-r from-red-600 to-red-800 text-gray-100 py-4 rounded-xl text-center font-semibold shadow-lg hover:from-red-700 hover:to-red-900 transition duration-300 transform hover:-translate-y-1 flex items-center justify-center space-x-3">
                             <i class="fas fa-lock"></i>
                             <span>Change Password</span>
                         </a>
@@ -158,8 +158,8 @@
     <style>
         .bg-pattern {
             background-image:
-                linear-gradient(rgba(255, 255, 255, 0.1) 2px, transparent 2px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.1) 2px, transparent 2px);
+                linear-gradient(rgba(255, 255, 255, 0.05) 2px, transparent 2px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 2px, transparent 2px);
             background-size: 20px 20px;
         }
     </style>
