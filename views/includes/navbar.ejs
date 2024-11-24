@@ -1,43 +1,123 @@
-<nav class="navbar-main">
-    <a href="/listings" class="logo-link">
-        <img src="/media/Job_Hunting-removebg-preview.png" alt="Job Hunt Logo" class="logo">
-        <span class="company-name">Job Hunt</span>
-    </a>
-    <div class="nav-toggle">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-    <ul class="nav-links">
-        <li><a href="/listings">Home</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/contact">Contact</a></li>
-        <% if(!currUser){ %>
-            <li><a href="/login">Login</a></li>
-            <% } else { %>
-                <li class="profile-dropdown">
-                    <div class="profile-container">
-                        <img src="<%= currUser.profileImage || 'https://t4.ftcdn.net/jpg/06/48/39/19/360_F_648391979_uMz6EwAlKNIJnK9r46UpTiM17nT8GuLl.jpg' %>"
-                            alt="Profile" class="profile-image">
-                        <div class="dropdown-content">
-                            <a href="/users/profile">
-                                <i class="fas fa-user"></i> My Profile
-                            </a>
-                            <a href="/users/mylistings">
-                                <i class="fas fa-clipboard-list"></i> My Job Listings
-                            </a>
-                            <a href="/users/applications">
-                                <i class="fas fa-briefcase"></i> My Applications
-                            </a>
-                            <a href="/listings/new">
-                                <i class="fas fa-plus-circle"></i> Post a New Job
-                            </a>
-                            <a href="/logout">
-                                <i class="fas fa-sign-out-alt"></i> Logout
-                            </a>
+<nav class="bg-gray-800 text-gray-100 shadow-lg relative z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <!-- Logo Section -->
+            <a href="/listings" class="flex items-center space-x-2">
+                <img src="/media/Job_Hunting-removebg-preview.png" alt="Job Hunt Logo" class="h-8 w-auto">
+                <span class="text-xl font-bold text-white">Job Hunt</span>
+            </a>
+
+            <!-- Mobile Menu Button -->
+            <button class="lg:hidden flex flex-col space-y-1" id="mobile-menu-button">
+                <span class="block w-6 h-0.5 bg-gray-100"></span>
+                <span class="block w-6 h-0.5 bg-gray-100"></span>
+                <span class="block w-6 h-0.5 bg-gray-100"></span>
+            </button>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden lg:flex items-center space-x-8">
+                <a href="/listings" class="flex items-center space-x-1 hover:text-blue-400 transition duration-200">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="/about" class="flex items-center space-x-1 hover:text-blue-400 transition duration-200">
+                    <i class="fas fa-info-circle"></i>
+                    <span>About</span>
+                </a>
+                <a href="/contact" class="flex items-center space-x-1 hover:text-blue-400 transition duration-200">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contact</span>
+                </a>
+
+                <% if(!currUser){ %>
+                    <a href="/login" class="flex items-center space-x-1 hover:text-blue-400 transition duration-200">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login</span>
+                    </a>
+                    <% } else { %>
+                        <div class="relative group">
+                            <!-- Profile Icon Container - No padding -->
+                            <div class="flex items-center space-x-2 cursor-pointer">
+                                <img src="<%= currUser.profileImage || 'https://t4.ftcdn.net/jpg/06/48/39/19/360_F_648391979_uMz6EwAlKNIJnK9r46UpTiM17nT8GuLl.jpg' %>"
+                                    alt="Profile" class="h-8 w-8 rounded-full object-cover">
+                                <i class="fas fa-chevron-down text-sm"></i>
+                            </div>
+
+                            <!-- Dropdown Menu with pseudo-element for hover bridge -->
+                            <div
+                                class="absolute right-0 w-48 bg-gray-800 rounded-lg shadow-xl hidden group-hover:block z-50 top-8 border-1">
+                                <!-- Invisible bridge to maintain hover -->
+                                <div class="absolute h-4 w-full -top-4"></div>
+                                <!-- Menu Items -->
+                                <div class="py-2">
+                                    <a href="/users/profile" class="block px-4 py-2 hover:bg-gray-700">
+                                        <i class="fas fa-user mr-2"></i>My Profile
+                                    </a>
+                                    <a href="/users/mylistings" class="block px-4 py-2 hover:bg-gray-700">
+                                        <i class="fas fa-clipboard-list mr-2"></i>My Job Listings
+                                    </a>
+                                    <a href="/users/applications" class="block px-4 py-2 hover:bg-gray-700">
+                                        <i class="fas fa-briefcase mr-2"></i>My Applications
+                                    </a>
+                                    <a href="/listings/new" class="block px-4 py-2 hover:bg-gray-700">
+                                        <i class="fas fa-plus-circle mr-2"></i>Post a New Job
+                                    </a>
+                                    <div class="border-t border-gray-700 my-1"></div>
+                                    <a href="/logout" class="block px-4 py-2 hover:bg-gray-700 text-red-400">
+                                        <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <% } %>
-    </ul>
+                        <% } %>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <div class="lg:hidden hidden z-50" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/listings" class="block px-3 py-2 rounded-md hover:bg-gray-700">
+                    <i class="fas fa-home mr-2"></i>Home
+                </a>
+                <a href="/about" class="block px-3 py-2 rounded-md hover:bg-gray-700">
+                    <i class="fas fa-info-circle mr-2"></i>About
+                </a>
+                <a href="/contact" class="block px-3 py-2 rounded-md hover:bg-gray-700">
+                    <i class="fas fa-envelope mr-2"></i>Contact
+                </a>
+
+                <% if(!currUser){ %>
+                    <a href="/login" class="block px-3 py-2 rounded-md hover:bg-gray-700">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Login
+                    </a>
+                    <% } else { %>
+                        <a href="/users/profile" class="block px-3 py-2 rounded-md hover:bg-gray-700">
+                            <i class="fas fa-user mr-2"></i>My Profile
+                        </a>
+                        <a href="/users/mylistings" class="block px-3 py-2 rounded-md hover:bg-gray-700">
+                            <i class="fas fa-clipboard-list mr-2"></i>My Job Listings
+                        </a>
+                        <a href="/users/applications" class="block px-3 py-2 rounded-md hover:bg-gray-700">
+                            <i class="fas fa-briefcase mr-2"></i>My Applications
+                        </a>
+                        <a href="/listings/new" class="block px-3 py-2 rounded-md hover:bg-gray-700">
+                            <i class="fas fa-plus-circle mr-2"></i>Post a New Job
+                        </a>
+                        <a href="/logout" class="block px-3 py-2 rounded-md hover:bg-gray-700 text-red-400">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                        </a>
+                        <% } %>
+            </div>
+        </div>
+    </div>
 </nav>
+
+<script>
+    // Mobile menu toggle functionality
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+</script>

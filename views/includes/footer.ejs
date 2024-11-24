@@ -1,14 +1,40 @@
-<footer>
-    <div class="f-info">
-        <div class="f-info-socials">
-            <i class="fa-brands fa-square-facebook"></i>
-            <i class="fa-brands fa-square-instagram"></i>
-            <i class="fa-brands fa-linkedin"></i>
-        </div>
-        <div class="f-info-brand">&copy; Job-Hunt Private Limited</div>
-        <div class="f-info-links">
-            <a href="/privacy">Privacy</a>
-            <a href="/terms">Terms</a>
+<footer class="bg-gray-800 text-gray-300 py-2 mt-auto">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
+            <!-- Social Media Icons -->
+            <div class="flex space-x-6">
+                <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors duration-300">
+                    <i class="fa-brands fa-square-facebook text-2xl"></i>
+                    <span class="sr-only">Facebook</span>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-pink-400 transition-colors duration-300">
+                    <i class="fa-brands fa-square-instagram text-2xl"></i>
+                    <span class="sr-only">Instagram</span>
+                </a>
+                <a href="#" class="text-gray-400 hover:text-blue-500 transition-colors duration-300">
+                    <i class="fa-brands fa-linkedin text-2xl"></i>
+                    <span class="sr-only">LinkedIn</span>
+                </a>
+            </div>
+
+            <!-- Copyright Text -->
+            <div class="text-gray-400 font-medium">
+                &copy; <span class="text-gray-300">2024</span> Job-Hunt Private Limited
+            </div>
+
+            <!-- Footer Links -->
+            <div class="flex space-x-6">
+                <a href="/privacy" class="text-gray-400 hover:text-white transition-colors duration-300 relative group">
+                    Privacy
+                    <span
+                        class="absolute inset-x-0 bottom-0 h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                </a>
+                <a href="/terms" class="text-gray-400 hover:text-white transition-colors duration-300 relative group">
+                    Terms
+                    <span
+                        class="absolute inset-x-0 bottom-0 h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
+                </a>
+            </div>
         </div>
     </div>
 </footer>

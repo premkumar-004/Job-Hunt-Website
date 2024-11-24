@@ -1,69 +1,83 @@
 <% layout("/layouts/boilerplate.ejs") %>
-
-    <body>
-        <div class="container mx-auto px-6 py-12">
-            <h1 class="text-5xl font-extrabold text-gray-800 mb-16 text-center">My Listings</h1>
+    <div class="min-h-screen bg-gray-900 px-6 py-12">
+        <div class="container mx-auto">
+            <!-- Header Section -->
+            <div class="flex items-center justify-center mb-16 space-x-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-blue-500" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+                <h1
+                    class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+                    My Listings
+                </h1>
+            </div>
 
             <% if (allListings && allListings.length> 0) { %>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     <% for (let listing of allListings) { %>
                         <% if (currUser && currUser._id.equals(listing.postedBy._id)) { %>
                             <div
-                                class="bg-gray-800 rounded-lg shadow-xl overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
-                                <!-- Image Section -->
-                                <div class="relative h-64 w-full overflow-hidden">
+                                class="group relative bg-gray-800 rounded-xl shadow-2xl overflow-hidden transform transition-all duration-300 hover:scale-102 hover:shadow-blue-500/20 hover:shadow-2xl">
+                                <!-- Image Container -->
+                                <div class="relative h-72 w-full overflow-hidden">
                                     <img src="<%= listing.image %>" alt="<%= listing.title %>"
-                                        class="w-full h-full object-cover">
+                                        class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110" />
                                     <div
-                                        class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70 hover:opacity-50 transition-opacity">
+                                        class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent opacity-90">
                                     </div>
                                 </div>
 
-                                <!-- Content Section -->
-                                <div class="p-8">
+                                <!-- Content Container -->
+                                <div class="relative p-8">
                                     <!-- Title -->
-                                    <h2 class="text-2xl font-bold text-gray-100 mb-4 truncate">
+                                    <h2 class="text-2xl font-bold text-white mb-4 line-clamp-2">
                                         <%= listing.title %>
                                     </h2>
 
-                                    <!-- Payment -->
-                                    <div class="flex items-center text-gray-400 mb-6">
-                                        <svg class="w-6 h-6 mr-2 text-green-400" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- Payment Info -->
+                                    <div class="flex items-center text-gray-300 mb-6 space-x-2">
+                                        <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor"
+                                            viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-                                            </path>
+                                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
                                         <span class="text-lg font-medium">
                                             Payment:
-                                            <strong>&#8377; <%= listing.payment ?
-                                                    listing.payment.toLocaleString("en-IN") : "N/A" %> /-</strong>
+                                            <strong class="text-green-400">
+                                                &#8377; <%= listing.payment ? listing.payment.toLocaleString("en-IN")
+                                                    : "N/A" %> /-
+                                            </strong>
                                         </span>
                                     </div>
 
                                     <!-- Action Buttons -->
                                     <div class="flex justify-between items-center space-x-4">
                                         <!-- View Details Button -->
-                                        <form action="/listings/<%= listing._id %>" method="GET">
+                                        <form action="/listings/<%= listing._id %>" method="GET" class="flex-1">
                                             <button type="submit"
-                                                class="flex items-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-3 px-4 rounded-lg shadow-lg transition-transform duration-200 hover:scale-105">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                    stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                                                class="w-full flex items-center justify-center bg-gradient-to-r from-blue-600 to-blue-800 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:from-blue-700 hover:to-blue-900 hover:shadow-lg hover:shadow-blue-500/30">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
+                                                    viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                                                        stroke-width="2"
+                                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                                                 </svg>
                                                 View Details
                                             </button>
                                         </form>
 
                                         <!-- View Applicants Button -->
-                                        <form action="/listings/<%= listing._id %>/applicants" method="GET">
+                                        <form action="/listings/<%= listing._id %>/applicants" method="GET"
+                                            class="flex-1">
                                             <button type="submit"
-                                                class="flex items-center bg-gradient-to-r from-green-500 to-teal-500 text-white font-semibold py-3 px-4 rounded-lg shadow-lg transition-transform duration-200 hover:scale-105">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                    stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                                                class="w-full flex items-center justify-center bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 hover:from-emerald-700 hover:to-teal-700 hover:shadow-lg hover:shadow-emerald-500/30">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
+                                                    viewBox="0 0 24 24" stroke="currentColor">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M15.75 9V5.25a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25V9m12 0h3.75m-3.75 0V19.5a2.25 2.25 0 01-2.25 2.25H8.25a2.25 2.25 0 01-2.25-2.25V9m12 0H9m9 0V4.5a2.25 2.25 0 00-2.25-2.25h-6.5a2.25 2.25 0 00-2.25 2.25V9" />
+                                                        stroke-width="2"
+                                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                                                 </svg>
                                                 View Applicants
                                             </button>
@@ -75,15 +89,19 @@
                                 <% } %>
                 </div>
                 <% } else { %>
-                    <div class="text-center py-16 bg-gray-50 rounded-lg shadow-md">
-                        <svg class="mx-auto h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24"
+                    <!-- Empty State -->
+                    <div class="text-center py-16 bg-gray-800 rounded-xl shadow-xl">
+                        <svg class="mx-auto h-24 w-24 text-gray-600" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
-                        <p class="mt-6 text-2xl text-gray-600 font-medium">You have not posted any jobs yet</p>
+                        <p class="mt-6 text-2xl text-gray-400 font-medium">You have not posted any jobs yet</p>
+                        <a href="/listings/new"
+                            class="inline-block mt-6 px-8 py-3 text-lg font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors duration-300">
+                            Post a New Job
+                        </a>
                     </div>
                     <% } %>
         </div>
-        </div>
-    </body>
+    </div>

@@ -145,7 +145,7 @@
                                 <% for(let listing of allListings){ %>
                                     <% if (currUser && !(currUser._id.equals(listing.postedBy._id))) { %>
                                         <a href="/listings/<%= listing._id %>"
-                                            class="transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                                            class="transform transition-all duration-300 hover:scale-105 hover:shadow-lg mb-4 mr-3 ml-3">
                                             <div
                                                 class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100">
                                                 <div class="relative h-48 overflow-hidden">
@@ -194,7 +194,7 @@
                                             <a href="/listings/<%= listing._id %>"
                                                 class="transform transition-all duration-300 hover:scale-105 hover:shadow-lg">
                                                 <div
-                                                    class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100">
+                                                    class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 mb-2">
                                                     <div class="relative h-48 overflow-hidden">
                                                         <img src="<%= listing.image %>" alt="<%= listing.title %>"
                                                             class="w-full h-full object-cover">
