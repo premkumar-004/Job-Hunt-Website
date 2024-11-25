@@ -1,7 +1,9 @@
 const mongoose = require("mongoose");
 const initData = require("./listinginit.js");
 const Listing = require("../models/listing.js");
-const MONGO_URL = 'mongodb://127.0.0.1:27017/JobHunt';
+
+// const MONGO_URL = 'mongodb://127.0.0.1:27017/JobHunt';
+const MONGO_URL = 'mongodb+srv://premkumarkardale:47x5kAViTVmyAqZY@cluster0.wblub.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
 main().then((res) => {
     console.log("Connected to DB");
