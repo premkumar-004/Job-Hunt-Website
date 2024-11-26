@@ -1,49 +1,125 @@
 <% layout("/layouts/boilerplate.ejs") %>
 
     <body>
-        <div class="row mt-3">
-            <div class="col-8 offset-2">
-                <h3>Edit your job listing</h3>
-                <form method="post" class="needs-validation" action="/listings/<%= listing._id %>?_method=PUT"
-                    novalidate>
-                    <div class="mb-3">
-                        <label for="title" class="form-label">Title</label>
-                        <input type="text" name="listing[title]" class="form-control" value="<%= listing.title %>"
-                            required>
-                        <div class="valid-feedback">Title looks good &#128512; !</div>
-                        <div class="invalid-feedback">Title required</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
-                        <textarea type="text" name="listing[description]" class="form-control"
-                            required><%= listing.description %></textarea>
-                        <div class="invalid-feedback">Description cannot be empty</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="image" class="form-label">Image</label>
-                        <input type="text" value="<%= listing.image %>" name="listing[image]" class="form-control">
-                    </div>
-                    <div class="row">
-                        <div class="mb-3 col-md-4">
-                            <label for="payment" class="form-label">Payment</label>
-                            <input value="<%= listing.payment %>" name="listing[payment]" class="form-control" required>
-                            <div class="invalid-feedback">Please enter a valid price </div>
+        <div class="min-h-screen bg-gray-900 py-8 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-gray-800 shadow-lg rounded-lg p-6">
+                    <h3 class="text-2xl font-bold text-gray-100 mb-6 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-400" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                        </svg>
+                        Edit your job listing
+                    </h3>
+
+                    <form method="post" class="needs-validation space-y-6"
+                        action="/listings/<%= listing._id %>?_method=PUT" novalidate>
+                        <div class="space-y-1">
+                            <label for="title" class="block text-sm font-medium text-gray-300">Title</label>
+                            <input type="text" name="listing[title]" value="<%= listing.title %>"
+                                class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                required>
+                            <div class="valid-feedback text-green-400 text-sm">Title looks good 😀 !</div>
+                            <div class="invalid-feedback text-red-400 text-sm">Title required</div>
                         </div>
-                        <div class="mb-3">
-                            <label for="location" class="form-label">Location</label>
-                            <input type="text" value="<%= listing.location %>" name="listing[location]"
-                                class="form-control" required>
-                            <div class="invalid-feedback">Location Required</div>
+
+                        <div class="space-y-1">
+                            <label for="description" class="block text-sm font-medium text-gray-300">Description</label>
+                            <textarea name="listing[description]"
+                                class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                required><%= listing.description %></textarea>
+                            <div class="invalid-feedback text-red-400 text-sm">Description cannot be empty</div>
                         </div>
-                        <div class="mb-3 col-md-8">
-                            <label for="country" class="form-label">Country</label>
-                            <input type="text" value="<%= listing.country %>" name="listing[country]"
-                                class="form-control" required>
-                            <div class="invalid-feedback">Country Name Required</div>
+
+                        <div class="space-y-1">
+                            <label for="image" class="block text-sm font-medium text-gray-300">
+                                <span class="flex items-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                        <circle cx="8.5" cy="8.5" r="1.5" />
+                                        <path d="M21 15l-5-5L5 21" />
+                                    </svg>
+                                    Image
+                                </span>
+                            </label>
+                            <input type="text" value="<%= listing.image %>" name="listing[image]"
+                                class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                         </div>
-                    </div>
-                    <button type="submit" class="btn btn-dark mb-3 mt-3 add-btn">Update</button>
-                </form>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-1">
+                                <label for="payment" class="block text-sm font-medium text-gray-300">
+                                    <span class="flex items-center gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <line x1="12" y1="1" x2="12" y2="23" />
+                                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                                        </svg>
+                                        Payment
+                                    </span>
+                                </label>
+                                <input value="<%= listing.payment %>" name="listing[payment]"
+                                    class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                    required>
+                                <div class="invalid-feedback text-red-400 text-sm">Please enter a valid price</div>
+                            </div>
+
+                            <div class="space-y-1">
+                                <label for="location" class="block text-sm font-medium text-gray-300">
+                                    <span class="flex items-center gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                            <circle cx="12" cy="10" r="3" />
+                                        </svg>
+                                        Location
+                                    </span>
+                                </label>
+                                <input type="text" value="<%= listing.location %>" name="listing[location]"
+                                    class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                    required>
+                                <div class="invalid-feedback text-red-400 text-sm">Location Required</div>
+                            </div>
+
+                            <div class="space-y-1">
+                                <label for="country" class="block text-sm font-medium text-gray-300">
+                                    <span class="flex items-center gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24"
+                                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10" />
+                                            <line x1="2" y1="12" x2="22" y2="12" />
+                                            <path
+                                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                                        </svg>
+                                        Country
+                                    </span>
+                                </label>
+                                <input type="text" value="<%= listing.country %>" name="listing[country]"
+                                    class="mt-1 block w-full rounded-md bg-gray-700 border-gray-600 text-gray-100 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                    required>
+                                <div class="invalid-feedback text-red-400 text-sm">Country Name Required</div>
+                            </div>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                                <polyline points="17 21 17 13 7 13 7 21" />
+                                <polyline points="7 3 7 8 15 8" />
+                            </svg>
+                            Update
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </body>

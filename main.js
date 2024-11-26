@@ -216,6 +216,18 @@ app.get("/users/:id", wrapAsync(async (req, res) => {
     let user = await User.findById(id);
     res.render("./users/viewprofile.ejs", { user });
 }))
+
+app.get("/users/profile/edit", (req, res) => {
+    res.render("./users/editProfile.ejs");
+})
+
+app.put("/users/profile/:id", isLoggedIn, wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    await User.findByIdAndUpdate(id, { ...req.body.user });
+    req.flash("success", "your profile updated successfully");
+    res.redirect("/users/profile");
+}))
+
 app.get("/privacy", (req, res) => {
     res.render("./contacts/privacy.ejs");
 })
