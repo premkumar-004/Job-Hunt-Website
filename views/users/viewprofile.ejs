@@ -48,7 +48,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- For email section -->
                             <div
                                 class="bg-gray-700/50 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-600">
                                 <div class="flex items-center space-x-4">
@@ -137,6 +136,19 @@
                         </div>
                     </div>
 
+                    <!-- Action Buttons -->
+                    <div class="flex justify-center space-x-4">
+                        <button id="acceptBtn"
+                            class="px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700 transition-colors duration-300 flex items-center">
+                            <i class="fas fa-check mr-2"></i>
+                            <span id="acceptText">Accept</span>
+                        </button>
+                        <button id="rejectBtn"
+                            class="px-6 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-colors duration-300 flex items-center">
+                            <i class="fas fa-times mr-2"></i>
+                            <span id="rejectText">Reject</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -150,6 +162,7 @@
             background-size: 20px 20px;
         }
     </style>
+
     <script>
         function toggleFullEmail(element) {
             const fullEmail = '<%= user.email %>';
@@ -163,4 +176,18 @@
                 element.style.overflowWrap = 'normal';
             }
         }
+
+        document.getElementById('acceptBtn').addEventListener('click', function () {
+            this.innerHTML = '<i class="fas fa-check mr-2"></i><span>Accepted</span>';
+            this.classList.add('bg-gray-600');
+            this.disabled = true;
+            document.getElementById('rejectBtn').disabled = true;
+        });
+
+        document.getElementById('rejectBtn').addEventListener('click', function () {
+            this.innerHTML = '<i class="fas fa-times mr-2"></i><span>Rejected</span>';
+            this.classList.add('bg-gray-600');
+            this.disabled = true;
+            document.getElementById('acceptBtn').disabled = true;
+        });
     </script>
