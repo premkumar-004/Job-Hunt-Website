@@ -238,7 +238,7 @@
 
             // Simulate loading delay then redirect
             setTimeout(() => {
-                window.location.href = '/users/chat';
+                window.location.href = '/users/<%=user._id%>/chat';
             }, 1500); // 1.5 second delay before redirect
         });
 
