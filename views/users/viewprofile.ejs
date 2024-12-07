@@ -148,6 +148,21 @@
                             <i class="fas fa-times mr-2"></i>
                             <span id="rejectText">Reject</span>
                         </button>
+                        <button id="chatNowBtn"
+                            class="px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-300 flex items-center">
+                            <i class="fas fa-comments mr-2"></i>
+                            <span id="chatBtnText">Chat Now</span>
+                            <div id="loadingSpinner" class="hidden ml-2">
+                                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                                        stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor"
+                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -164,6 +179,21 @@
     </style>
 
     <script>
+        // Reset chat button state when page loads/reloads
+        window.addEventListener('pageshow', function (event) {
+            // The persisted property returns true if the page was restored from the bfcache
+            // This ensures the button resets even when using back/forward navigation
+            const button = document.getElementById('chatNowBtn');
+            const spinner = document.getElementById('loadingSpinner');
+            const textSpan = document.getElementById('chatBtnText');
+
+            // Reset button to initial state
+            button.disabled = false;
+            spinner.classList.add('hidden');
+            textSpan.textContent = 'Chat Now';
+            button.classList.remove('bg-blue-700');
+        });
+
         function toggleFullEmail(element) {
             const fullEmail = '<%= user.email %>';
             if (element.classList.contains('truncate')) {
@@ -190,4 +220,30 @@
             this.disabled = true;
             document.getElementById('acceptBtn').disabled = true;
         });
+
+        // Chat button functionality
+        document.getElementById('chatNowBtn').addEventListener('click', function () {
+            const button = this;
+            const spinner = document.getElementById('loadingSpinner');
+            const textSpan = document.getElementById('chatBtnText');
+
+            // Disable button and show loading state
+            button.disabled = true;
+            spinner.classList.remove('hidden');
+            textSpan.textContent = 'Opening Chat';
+            button.classList.add('bg-blue-700');
+
+            // Store the loading state in sessionStorage
+            sessionStorage.setItem('chatButtonLoading', 'true');
+
+            // Simulate loading delay then redirect
+            setTimeout(() => {
+                window.location.href = '/users/chat';
+            }, 1500); // 1.5 second delay before redirect
+        });
+
+        // Check and clear any stored loading state
+        if (sessionStorage.getItem('chatButtonLoading')) {
+            sessionStorage.removeItem('chatButtonLoading');
+        }
     </script>
