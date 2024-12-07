@@ -231,8 +231,8 @@ app.put("/users/profile/:id", isLoggedIn, wrapAsync(async (req, res) => {
 
 app.get("/users/:id/chat", isLoggedIn, wrapAsync(async (req, res) => {
     let { id } = req.params;
-    let applicant = await User.findById(id);
-    res.render("./chats/chat.ejs");
+    let user = await User.findById(id);
+    res.render("./chats/chat.ejs", { user });
 }))
 
 app.get("/privacy", (req, res) => {

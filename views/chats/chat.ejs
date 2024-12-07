@@ -1,0 +1,148 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+    <div class="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 p-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="bg-gray-800 rounded-3xl shadow-2xl overflow-hidden border border-gray-700">
+                <!-- Chat Header -->
+                <div class="bg-gradient-to-r from-blue-900 to-purple-900 p-4">
+                    <div class="flex items-center space-x-4">
+                        <a href="/users/profile" class="text-white hover:text-gray-200 transition-colors">
+                            <i class="fas fa-arrow-left text-xl"></i>
+                        </a>
+                        <div class="flex items-center space-x-3">
+                            <div class="relative">
+                                <img src="<%= user.profileImage || 'https://t4.ftcdn.net/jpg/06/48/39/19/360_F_648391979_uMz6EwAlKNIJnK9r46UpTiM17nT8GuLl.jpg' %>"
+                                    alt="Profile" class="w-12 h-12 rounded-full border-2 border-gray-700 object-cover">
+                                <div
+                                    class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 rounded-full border-2 border-gray-700">
+                                </div>
+                            </div>
+                            <div>
+                                <h2 class="text-white font-semibold">
+                                    <%= user.name %>
+                                </h2>
+                                <p class="text-gray-300 text-sm">Online</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Messages Area -->
+                <div class="h-[calc(100vh-16rem)] overflow-y-auto p-6 space-y-4" id="chatMessages">
+                    <!-- Demo messages -->
+                    <div class="flex justify-start">
+                        <div class="bg-gray-700 rounded-2xl rounded-tl-none p-4 max-w-md">
+                            <p class="text-white">Hey! How are you?</p>
+                            <p class="text-gray-400 text-xs mt-1">10:30 AM</p>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <div class="bg-blue-600 rounded-2xl rounded-tr-none p-4 max-w-md">
+                            <p class="text-white">I'm doing great! Thanks for asking. How about you?</p>
+                            <p class="text-blue-200 text-xs mt-1">10:31 AM</p>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-start">
+                        <div class="bg-gray-700 rounded-2xl rounded-tl-none p-4 max-w-md">
+                            <p class="text-white">I'm good too! Would you like to discuss the project?</p>
+                            <p class="text-gray-400 text-xs mt-1">10:32 AM</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Input Area -->
+                <div class="p-4 bg-gray-750 border-t border-gray-700">
+                    <form id="chatForm" class="flex items-center space-x-4">
+                        <div class="flex-1 relative">
+                            <input type="text" id="messageInput"
+                                class="w-full bg-gray-700 text-white rounded-xl py-3 px-4 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-600"
+                                placeholder="Type your message...">
+                            <button type="button"
+                                class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300 transition-colors">
+                                <i class="fas fa-smile text-xl"></i>
+                            </button>
+                        </div>
+                        <button type="submit"
+                            class="bg-blue-600 hover:bg-blue-700 text-white rounded-xl p-3 transition-colors">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chatForm = document.getElementById('chatForm');
+        const messageInput = document.getElementById('messageInput');
+        const chatMessages = document.getElementById('chatMessages');
+
+        chatForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const message = messageInput.value.trim();
+            if (!message) return;
+
+            // Create new message element
+            const messageHTML = `
+            <div class="flex justify-end">
+                <div class="bg-blue-600 rounded-2xl rounded-tr-none p-4 max-w-md">
+                    <p class="text-white">${message}</p>
+                    <p class="text-blue-200 text-xs mt-1">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                </div>
+            </div>
+        `;
+
+            // Add message to chat
+            chatMessages.insertAdjacentHTML('beforeend', messageHTML);
+
+            // Clear input
+            messageInput.value = '';
+
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Simulate reply after 1 second
+            setTimeout(() => {
+                const replyHTML = `
+                <div class="flex justify-start">
+                    <div class="bg-gray-700 rounded-2xl rounded-tl-none p-4 max-w-md">
+                        <p class="text-white">Thanks for your message! This is a demo reply.</p>
+                        <p class="text-gray-400 text-xs mt-1">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
+                    </div>
+                </div>
+            `;
+                chatMessages.insertAdjacentHTML('beforeend', replyHTML);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 1000);
+        });
+
+        // Auto-resize input field
+        messageInput.addEventListener('input', function () {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+    </script>
+
+    <style>
+        /* Custom scrollbar for chat messages */
+        #chatMessages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #chatMessages::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+        }
+
+        #chatMessages::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+        }
+
+        #chatMessages::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
