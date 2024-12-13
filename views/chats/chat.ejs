@@ -21,7 +21,6 @@
                                 <h2 class="text-white font-semibold">
                                     <%= user.name %>
                                 </h2>
-                                <p class="text-gray-300 text-sm">Online</p>
                             </div>
                         </div>
                     </div>
@@ -29,43 +28,42 @@
 
                 <!-- Chat Messages Area -->
                 <div class="h-[calc(100vh-16rem)] overflow-y-auto p-6 space-y-4" id="chatMessages">
-                    <!-- Demo messages -->
-                    <div class="flex justify-start">
-                        <div class="bg-gray-700 rounded-2xl rounded-tl-none p-4 max-w-md">
-                            <p class="text-white">Hey! How are you?</p>
-                            <p class="text-gray-400 text-xs mt-1">10:30 AM</p>
-                        </div>
-                    </div>
-
-                    <div class="flex justify-end">
-                        <div class="bg-blue-600 rounded-2xl rounded-tr-none p-4 max-w-md">
-                            <p class="text-white">I'm doing great! Thanks for asking. How about you?</p>
-                            <p class="text-blue-200 text-xs mt-1">10:31 AM</p>
-                        </div>
-                    </div>
-
-                    <div class="flex justify-start">
-                        <div class="bg-gray-700 rounded-2xl rounded-tl-none p-4 max-w-md">
-                            <p class="text-white">I'm good too! Would you like to discuss the project?</p>
-                            <p class="text-gray-400 text-xs mt-1">10:32 AM</p>
-                        </div>
-                    </div>
+                    <% if (chat && chat.length> 0) { %>
+                        <% chat[0].messages.forEach(message=> { %>
+                            <div
+                                class="flex justify-<%= message.sender.toString() === currUser._id.toString() ? 'end' : 'start' %>">
+                                <div
+                                    class="<%= message.sender.toString() === currUser._id.toString() ? 'bg-blue-600' : 'bg-gray-700' %> 
+                                     rounded-2xl <%= message.sender.toString() === currUser._id.toString() ? 'rounded-tr-none' : 'rounded-tl-none' %> p-4 max-w-md">
+                                    <p class="text-white">
+                                        <%= message.content %>
+                                    </p>
+                                    <p
+                                        class="<%= message.sender.toString() === currUser._id.toString() ? 'text-blue-200' : 'text-gray-400' %> text-xs mt-1">
+                                        <%= new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit' ,
+                                            minute: '2-digit' }) %>
+                                    </p>
+                                </div>
+                            </div>
+                            <% }) %>
+                                <% } %>
                 </div>
 
                 <!-- Chat Input Area -->
                 <div class="p-4 bg-gray-750 border-t border-gray-700">
-                    <form id="chatForm" class="flex items-center space-x-4">
+                    <form id="chatForm" class="flex items-center space-x-4 " method="post"
+                        action="/users/<%=user._id%>/chat/">
                         <div class="flex-1 relative">
                             <input type="text" id="messageInput"
                                 class="w-full bg-gray-700 text-white rounded-xl py-3 px-4 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500 border border-gray-600"
-                                placeholder="Type your message...">
+                                placeholder="Type your message..." name="msg">
                             <button type="button"
                                 class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-300 transition-colors">
                                 <i class="fas fa-smile text-xl"></i>
                             </button>
                         </div>
                         <button type="submit"
-                            class="bg-blue-600 hover:bg-blue-700 text-white rounded-xl p-3 transition-colors">
+                            class="bg-blue-600 hover:bg-blue-700 text-white rounded-xl p-3 transition-colors flex items-center justify-center">
                             <i class="fas fa-paper-plane"></i>
                         </button>
                     </form>
@@ -74,57 +72,6 @@
         </div>
     </div>
 
-    <script>
-        const chatForm = document.getElementById('chatForm');
-        const messageInput = document.getElementById('messageInput');
-        const chatMessages = document.getElementById('chatMessages');
-
-        chatForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const message = messageInput.value.trim();
-            if (!message) return;
-
-            // Create new message element
-            const messageHTML = `
-            <div class="flex justify-end">
-                <div class="bg-blue-600 rounded-2xl rounded-tr-none p-4 max-w-md">
-                    <p class="text-white">${message}</p>
-                    <p class="text-blue-200 text-xs mt-1">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-                </div>
-            </div>
-        `;
-
-            // Add message to chat
-            chatMessages.insertAdjacentHTML('beforeend', messageHTML);
-
-            // Clear input
-            messageInput.value = '';
-
-            // Scroll to bottom
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-
-            // Simulate reply after 1 second
-            setTimeout(() => {
-                const replyHTML = `
-                <div class="flex justify-start">
-                    <div class="bg-gray-700 rounded-2xl rounded-tl-none p-4 max-w-md">
-                        <p class="text-white">Thanks for your message! This is a demo reply.</p>
-                        <p class="text-gray-400 text-xs mt-1">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-                    </div>
-                </div>
-            `;
-                chatMessages.insertAdjacentHTML('beforeend', replyHTML);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 1000);
-        });
-
-        // Auto-resize input field
-        messageInput.addEventListener('input', function () {
-            this.style.height = 'auto';
-            this.style.height = (this.scrollHeight) + 'px';
-        });
-    </script>
 
     <style>
         /* Custom scrollbar for chat messages */
@@ -144,5 +91,11 @@
 
         #chatMessages::-webkit-scrollbar-thumb:hover {
             background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Prevent text input from overflowing */
+        #messageInput {
+            max-height: 100px;
+            overflow-y: auto;
         }
     </style>

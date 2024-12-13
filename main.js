@@ -15,6 +15,7 @@ const flash = require("connect-flash");
 const bcrypt = require('bcrypt');
 const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
+const Chat = require("./models/chat.js");
 
 app.set("view engine", "ejs");
 app.use(express.json());
@@ -203,7 +204,7 @@ app.get('/users/profile', isLoggedIn, async (req, res) => {
 //My applications Route
 app.get("/users/applications", isLoggedIn, async (req, res) => {
     let user = req.user;
-    let allListings = await Listing.find({});
+    let allListings = await Listing.find({}).populate("applicants").populate("postedBy");
     res.render("./users/myApplications.ejs", { allListings });
 })
 app.get("/users/mylistings", isLoggedIn, async (req, res) => {
@@ -222,7 +223,7 @@ app.get("/users/profile/edit", (req, res) => {
 })
 
 app.put("/users/profile/:id", isLoggedIn, wrapAsync(async (req, res) => {
-    let { id } = req.params;
+    let id = req.user._id;
     await User.findByIdAndUpdate(id, { ...req.body.user });
     req.flash("success", "your profile updated successfully");
     res.redirect("/users/profile");
@@ -231,9 +232,54 @@ app.put("/users/profile/:id", isLoggedIn, wrapAsync(async (req, res) => {
 
 app.get("/users/:id/chat", isLoggedIn, wrapAsync(async (req, res) => {
     let { id } = req.params;
+    let Curruser = req.user;
     let user = await User.findById(id);
-    res.render("./chats/chat.ejs", { user });
+    let chat = await Chat.find({ job_provider: Curruser._id, applicant: user._id }).populate("job_provider");
+    res.render("./chats/chat.ejs", { user, chat });
 }))
+
+
+app.post("/users/:id/chat", isLoggedIn, wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    let { msg } = req.body;
+    let Curruser = req.user;
+    let user = await User.findById(id);
+    let chat = await Chat.findOne({ job_provider: Curruser._id, applicant: user._id }).populate("job_provider");
+    if (!chat) {
+        chat = await Chat.findOne({ job_provider: user._id, applicant: Curruser._id }).populate("job_provider");
+    }
+
+    if (!chat) {
+        chat = new Chat({
+            job_provider: user._id,
+            applicant: req.app1,
+            messages: [],
+        });
+
+
+    }
+    let obj = {
+        content: msg,
+        timestamp: Date.now(),
+        sender: Curruser._id,
+    };
+    console.log(obj);
+
+    chat.messages.push(obj);
+    await chat.save();
+    console.log(chat);
+    res.redirect(`/users/${id}/chat`);
+}))
+
+app.get("/listings/:id/chat", isLoggedIn, wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    let Curruser = req.user;
+    let user = await User.findById(id);
+    let chat = await Chat.find({ job_provider: user._id, applicant: Curruser._id }).populate("job_provider");
+    res.render("./chats/chat.ejs", { user, chat });
+}))
+
+
 
 app.get("/privacy", (req, res) => {
     res.render("./contacts/privacy.ejs");
