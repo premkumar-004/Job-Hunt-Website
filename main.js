@@ -123,9 +123,10 @@ app.delete("/listings/:id", wrapAsync(async (req, res) => {
     res.redirect("/listings");
 }))
 
-app.get("/", (req, res) => {
-    res.render("./listing/index.ejs");
-});
+app.get("/", wrapAsync(async (req, res) => {
+    let allListings = await Listing.find({});
+    res.render("./listing/index.ejs", { allListings });
+}));
 
 app.get("/signup", (req, res) => {
     res.render("./listing/signup.ejs");
@@ -238,24 +239,29 @@ app.get("/users/:id/chat", isLoggedIn, wrapAsync(async (req, res) => {
     res.render("./chats/chat.ejs", { user, chat });
 }))
 
+app.get("/listings/:id/chat", isLoggedIn, wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    let Curruser = req.user;
+    let user = await User.findById(id);
+    let chat = await Chat.find({ job_provider: user._id, applicant: Curruser._id }).populate("job_provider");
+    res.render("./chats/chat1.ejs", { user, chat });
+}))
+
 
 app.post("/users/:id/chat", isLoggedIn, wrapAsync(async (req, res) => {
     let { id } = req.params;
     let { msg } = req.body;
     let Curruser = req.user;
+    let flag = false;
     let user = await User.findById(id);
     let chat = await Chat.findOne({ job_provider: Curruser._id, applicant: user._id }).populate("job_provider");
-    if (!chat) {
-        chat = await Chat.findOne({ job_provider: user._id, applicant: Curruser._id }).populate("job_provider");
-    }
 
     if (!chat) {
         chat = new Chat({
-            job_provider: user._id,
-            applicant: req.app1,
+            job_provider: Curruser._id,
+            applicant: user._id,
             messages: [],
         });
-
 
     }
     let obj = {
@@ -263,20 +269,33 @@ app.post("/users/:id/chat", isLoggedIn, wrapAsync(async (req, res) => {
         timestamp: Date.now(),
         sender: Curruser._id,
     };
-    console.log(obj);
-
     chat.messages.push(obj);
     await chat.save();
-    console.log(chat);
     res.redirect(`/users/${id}/chat`);
 }))
 
-app.get("/listings/:id/chat", isLoggedIn, wrapAsync(async (req, res) => {
+app.post("/users/:id/chat1", isLoggedIn, wrapAsync(async (req, res) => {
     let { id } = req.params;
+    let { msg } = req.body;
     let Curruser = req.user;
+    let flag = false;
     let user = await User.findById(id);
-    let chat = await Chat.find({ job_provider: user._id, applicant: Curruser._id }).populate("job_provider");
-    res.render("./chats/chat.ejs", { user, chat });
+    let chat = await Chat.findOne({ job_provider: user._id, applicant: Curruser._id }).populate("job_provider");
+    if (!chat) {
+        chat = new Chat({
+            job_provider: user._id,
+            applicant: Curruser._id,
+            messages: [],
+        });
+    }
+    let obj = {
+        content: msg,
+        timestamp: Date.now(),
+        sender: Curruser._id,
+    };
+    chat.messages.push(obj);
+    await chat.save();
+    res.redirect(`/listings/${id}/chat`);
 }))
 
 
